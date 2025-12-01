@@ -180,10 +180,9 @@ public class SocketIOManager : MonoBehaviour
         gameSocket.On<string>("result", OnResult);
         gameSocket.On<bool>("socketState", OnSocketState);
         gameSocket.On<string>("internalError", OnSocketError);
-        gameSocket.On<string>("alert", OnSocketAlert);
         gameSocket.On<string>("pong", OnPongReceived); //Back2 Start
-
-        gameSocket.On<string>("AnotherDevice", OnSocketOtherDevice);
+        gameSocket.On<string>("AnotherDevice", OnSocketOtherDevice); //BackendChanges Finish
+        gameSocket.On<Error>(SocketIOEventTypes.Error, OnError);
         manager.Open();
 
         // Start connecting to the server
@@ -229,6 +228,13 @@ public class SocketIOManager : MonoBehaviour
         Debug.Log($"📦 Pong payload: {data}");
     } //Back2 end
 
+    private void OnError(Error err)
+    {
+        Debug.LogError("Socket Error Message : " + err);
+#if UNITY_WEBGL && !UNITY_EDITOR
+        JSManager.SendCustomMessage("error");
+#endif
+    }
     private void OnError()
     {
         Debug.LogError("Socket Error");
