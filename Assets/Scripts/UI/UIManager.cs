@@ -375,7 +375,7 @@ public class UIManager : MonoBehaviour
             WinPopupTextTween.Kill();
             WinPopupTextTween = null;
         }
-        ClosePopup(WinPopup_Object);
+        CloseWinPopup(WinPopup_Object);
         slotManager.CheckPopups = false;
     }
 
