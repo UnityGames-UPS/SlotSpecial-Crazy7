@@ -140,7 +140,6 @@ public class SlotBehaviour : MonoBehaviour
     internal bool IsAutoSpin = false;
     internal bool IsFreeSpin = false;
     private bool IsSpinning = false;
-    private bool CheckSpinAudio = false;
     internal bool CheckPopups = false;
     internal int BetCounter = 0;
     private double currentbalance = 0;
@@ -316,6 +315,13 @@ public class SlotBehaviour : MonoBehaviour
         }
     }
 
+    internal void UpdateBalanceDisplay(double newBalance)
+    {
+        currentbalance = newBalance;
+        if (balance_text) balance_text.text = newBalance.ToString("F3");
+        Comparebalance();
+    }
+
     #region LinesCalculation
     //Fetch Lines from backend
     internal void FetchLines(string LineVal, int count)
@@ -418,11 +424,6 @@ public class SlotBehaviour : MonoBehaviour
     }
     #endregion
 
-    private void OnApplicationFocus(bool focus)
-    {
-        audioController.CheckFocusFunction(focus, CheckSpinAudio);
-    }
-
     //function to populate animation sprites accordingly
     private void PopulateAnimationSprites(ImageAnimation animScript, int val)
     {
@@ -483,7 +484,6 @@ public class SlotBehaviour : MonoBehaviour
             yield break;
         }
         if (audioController) audioController.PlayWLAudio("spin");
-        CheckSpinAudio = true;
 
         IsSpinning = true;
 
@@ -803,7 +803,6 @@ public class SlotBehaviour : MonoBehaviour
             //if (audioController) audioController.PlayWLAudio("lose");
             if (audioController) audioController.StopWLAaudio();
         }
-        CheckSpinAudio = false;
     }
 
     private void WinningsAnim(bool IsStart)
