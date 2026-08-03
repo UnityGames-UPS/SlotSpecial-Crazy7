@@ -31,6 +31,18 @@
 
   <script>
     const canvas = document.querySelector("#unity-canvas");
+    var unityInstance = null;   // captured on load; jslib listeners use it as a SendMessage fallback
+    var lastProgressSent = -1;
+
+    // Forward loader progress to the host; loading-complete is signalled by Unity's "OnEnter".
+    function sendProgressToPlatform(progressValue) {
+      var percentage = Math.round(progressValue * 100);
+      if (percentage === lastProgressSent) return;
+      lastProgressSent = percentage;
+      if (window.parent) {
+        window.parent.postMessage({ type: "UnityLoaderProgress", progress: percentage }, "*");
+      }
+    }
 
     // Function to resize the canvas
     function resizeCanvas() {
@@ -183,7 +195,9 @@
       script.src = buildUrl + "/{{{ LOADER_FILENAME }}}";
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
-        }).then((unityInstance) => {
+          sendProgressToPlatform(progress);
+        }).then((instance) => {
+          unityInstance = instance;
           console.log(`[${new Date().toISOString()}] Unity instance created successfully`);
         }).catch((message) => {
           console.error(`[${new Date().toISOString()}] Error creating Unity instance: ${message}`);
