@@ -363,7 +363,7 @@ public class UIManager : MonoBehaviour
         slotManager.FreeSpin(spins);
     }
 
-    internal void FreeSpinProcess(int spins)
+    private void FreeSpinProcess(int spins)
     {
         int ExtraSpins = spins - FreeSpins;
         FreeSpins = spins;

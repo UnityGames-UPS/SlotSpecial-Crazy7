@@ -27,7 +27,7 @@ public class SocketIOManager : MonoBehaviour
     internal Player PlayerData = null;
     //internal Root GambleData = null;
     // internal Root bonusData = new();
-    internal List<List<int>> LineData = null;
+    private List<List<int>> LineData = null;
     internal List<int> BonusData = null;
 
     internal bool isResultdone = false;
@@ -37,7 +37,7 @@ public class SocketIOManager : MonoBehaviour
 
     private SocketManager manager;
 
-    [SerializeField] internal JSFunctCalls JSManager;
+    [SerializeField] private JSFunctCalls JSManager;
 
 
     protected string SocketURI = null;
@@ -50,9 +50,9 @@ public class SocketIOManager : MonoBehaviour
     protected string gameID = "SL-CR7";
     //protected string gameID = "";
 
-    internal bool isLoaded = false;
+    private bool isLoaded = false;
 
-    internal bool SetInit = false;
+    private bool SetInit = false;
 
     private const int maxReconnectionAttempts = 6;
     private readonly TimeSpan reconnectionDelay = TimeSpan.FromSeconds(10);

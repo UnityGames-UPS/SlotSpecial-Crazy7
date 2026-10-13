@@ -151,7 +151,7 @@ public class SlotBehaviour : MonoBehaviour
     private bool StopSpinToggle;
     private float SpinDelay = 0.2f;
     private bool IsTurboOn;
-    internal bool WasAutoSpinOn;
+    private bool WasAutoSpinOn;
 
     private void Start()
     {
@@ -694,7 +694,7 @@ public class SlotBehaviour : MonoBehaviour
         }
     }
 
-    internal void CheckBonusGame()
+    private void CheckBonusGame()
     {
         _bonusManager.StartBonus((int)SocketManager.ResultData.bonus.BonusSpinStopIndex);       // cr7
     }
